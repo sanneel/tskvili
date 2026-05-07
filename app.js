@@ -67,22 +67,20 @@ async function fetchProducts(append = false) {
 
     try {
         const offset = state.offset;
-        // Fetch products in REVIEWED or LIVE stages
-        const [resA, resL] = await Promise.all([
-            apiFetch(`/products?stage=REVIEWED&limit=${PAGE_LIMIT}&offset=${offset}&sort=score`),
-            apiFetch(`/products?stage=LIVE&limit=${PAGE_LIMIT}&offset=${offset}&sort=score`),
-        ]);
+        // Fetch from the new consolidated catalog endpoint
+        const res = await apiFetch(`/catalog?limit=${PAGE_LIMIT}&offset=${offset}`);
 
-        const fresh = [...(resA.products || []), ...(resL.products || [])];
+        const fresh = res.products || [];
         const seen = new Set(state.allProducts.map(p => p.id));
         const unique = fresh.filter(p => !seen.has(p.id));
 
         state.allProducts = append ? [...state.allProducts, ...unique] : unique;
-        state.total = (resA.total || 0) + (resL.total || 0);
+        state.total = res.total || 0;
         state.offset = offset + PAGE_LIMIT;
 
         applyFilter();
     } catch (err) {
+
         console.error('Fetch error:', err);
         showEmpty();
     } finally {
