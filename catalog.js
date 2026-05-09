@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ── Render gallery ──
   function render(filter = 'All') {
     const items = filter === 'All' ? CATALOG : CATALOG.filter(i => {
-      if (filter === 'Girl') return i.category === 'female' || i.category === 'for-her';
-      if (filter === 'Boy') return i.category === 'male' || i.category === 'for-him';
+      if (filter === 'Girl') return i.category === 'female' || i.category === 'for-her' || i.category === 'Girl';
+      if (filter === 'Boy') return i.category === 'male' || i.category === 'for-him' || i.category === 'Boy';
       return i.category === filter;
     });
     bento.innerHTML = items.map(item => `
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       `<li><span>${k}</span><span>${v}</span></li>`).join('');
 
     const cta = document.getElementById('profileCTA');
-    cta.href = `https://instagram.com/${ig}`;
+    cta.href = item.instagram_url || `https://instagram.com/${ig}`;
 
     // Related items
     const related = CATALOG.filter(i => i.id != id);
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ── Init ──
   try {
-    const res = await fetch(API_BASE + '/catalog?limit=24');
+    const res = await fetch(API_BASE + '/catalog?limit=48');
     const data = await res.json();
     const fresh = data.products || [];
     CATALOG = fresh.map(p => ({
@@ -162,9 +162,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       name: p.product_name || p.title_translated || 'Product',
       atelier: 'ID: ' + p.id,
       category: p.audience || p.category || 'unisex',
-      aesthetic: 'წყვილი · Tskvili',
-      subtitle: '',
-      story: '',
+      aesthetic: '✨ ✨ ✨',
+      subtitle: p.keyword || '',
+      story: p.caption || p.description || '',
+      instagram_url: p.instagram_url || '',
       images: (p.images || []).map(getImageUrl),
       materials: [['ფასი', (p.sell_price_eur || 0) + ' GEL']],
       edition: '',
