@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const aboutSheet   = document.getElementById('aboutSheet');
   const backBtn      = document.getElementById('backToGallery');
   const aboutClose   = document.getElementById('aboutClose');
+  const brandLogo    = document.getElementById('brandLogo');
 
   const ig = window.IG_USERNAME_OVERRIDE || 'tskvili';
 
@@ -42,7 +43,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const item = CATALOG.find(i => i.id == id);
     if (!item) return;
 
-    document.getElementById('profileTag').textContent    = item.aesthetic;
     document.getElementById('profileTitle').textContent  = item.name;
     document.getElementById('profileSubtitle').textContent = item.subtitle;
     document.getElementById('profileStory').textContent  = item.story;
@@ -83,6 +83,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     viewGallery.classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // ── Brand Logo Reset ──
+  if (brandLogo) {
+    brandLogo.addEventListener('click', () => {
+      // Close profile if open
+      viewProfile.classList.add('hidden');
+      viewProfile.setAttribute('aria-hidden', 'true');
+      viewGallery.classList.remove('hidden');
+      
+      // Close about sheet if open
+      aboutSheet.classList.remove('open');
+      aboutSheet.setAttribute('aria-hidden', 'true');
+      
+      // Reset filter to All
+      const allLink = Array.from(links).find(l => l.dataset.filter === 'All');
+      if (allLink) {
+        links.forEach(l => l.classList.remove('active'));
+        allLink.classList.add('active');
+        pillIndicator.style.width     = `${allLink.offsetWidth}px`;
+        pillIndicator.style.transform = `translateX(${allLink.offsetLeft}px)`;
+        render('All');
+      }
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   // ── Pill nav ──
   links.forEach(link => {

@@ -287,9 +287,83 @@ body {
 }
 
 @media (max-width: 768px) {
-  .seal { display: none; }
-  .hero-title { font-size: 42px; }
-  .view-profile { padding: 24px; }
-  .profile-image { position: static; }
-  .about-inner { padding: 40px 24px; }
+  .top-mark {
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px 20px;
+    text-align: center;
+  }
+  .brand {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .top-meta {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .top-meta .dot { display: none; }
+
+  .hero {
+    padding: 60px 20px 30px;
+  }
+  .hero-title {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+  .hero-sub {
+    font-size: 15px;
+  }
+
+  .slider-wrap {
+    padding: 15px 10px;
+  }
+  .slider-link {
+    padding: 10px 14px;
+    font-size: 10px;
+  }
+
+  .bento {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 40px 20px;
+  }
+  .card-image {
+    aspect-ratio: 4/5;
+  }
+
+  .view-profile {
+    padding: 20px;
+  }
+  .profile {
+    gap: 30px;
+  }
+  .profile-title {
+    font-size: 32px;
+  }
+  .profile-image {
+    border-radius: 20px;
+  }
+  .profile-body {
+    padding: 0;
+  }
+  .back-link {
+    margin-bottom: 30px;
+  }
+  .connection {
+    margin-top: 30px;
+  }
+  .concierge-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 32px;
+  }
+  .brand-name {
+    font-size: 20px;
+  }
 }
