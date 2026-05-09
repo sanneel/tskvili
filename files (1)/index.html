@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>წყვილი · Tskvili</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  :root {
+    --page:      #f3dccd;
+    --rose:      #e9b3a6;
+    --cream:     #f6e4d2;
+    --ink:       #3a1a1f;
+    --ink-soft:  #6a3a3a;
+    --ink-faint: #95746c;
+    --gold:      #b06b59;
+    --serif: 'Noto Serif Georgian', 'Playfair Display', serif;
+    --display: 'Playfair Display', 'Cormorant Garamond', serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html, body {
+    background:
+      radial-gradient(800px 500px at 15% 5%,  rgba(233,179,166,0.5) , transparent 60%),
+      radial-gradient(800px 600px at 88% 20%, rgba(246,228,210,0.8) , transparent 60%),
+      radial-gradient(1000px 700px at 50% 105%, rgba(176,107,89,0.15), transparent 60%),
+      linear-gradient(175deg, #f3dccd 0%, #eccab8 100%);
+    background-attachment: fixed;
+    font-family: var(--sans);
+    color: var(--ink);
+  }
+
+  /* ── Header ── */
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-glyph {
+    font-family: var(--display); font-style: italic;
+    color: var(--gold); font-size: 28px; line-height: 1;
+  }
+  .brand-name {
+    font-family: var(--serif); font-weight: 500;
+    font-size: 21px; letter-spacing: -0.01em;
+  }
+  .brand-name .latin {
+    font-family: var(--display); font-style: italic; font-weight: 400;
+    color: var(--ink-soft); margin-left: 8px; font-size: 0.72em; letter-spacing: 0.07em;
+  }
+  .top-meta { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); }
+
+  /* ── Pill nav ── */
+  .slider { background: rgba(255,240,230,0.6) !important; border-color: rgba(176,107,89,0.15) !important; }
+  .slider-indicator { background: rgba(255,255,255,0.75) !important; box-shadow: 0 2px 12px rgba(58,26,31,0.08) !important; }
+  .slider-link { font-family: var(--sans); font-weight: 500; font-size: 10.5px; letter-spacing: 0.12em; color: var(--ink-soft); border: none; background: transparent; cursor: pointer; }
+  .slider-link.active { color: var(--ink); }
+
+  /* ── Hero ── */
+  .hero-eyebrow { font-family: var(--sans); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+  .hero-title { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; line-height: 1.07; }
+  .hero-title em { font-family: var(--display); font-style: italic; font-weight: 500; color: var(--gold) !important; }
+  .hero-sub { font-family: var(--sans); font-size: 15.5px; font-weight: 300; line-height: 1.7; color: var(--ink-soft); letter-spacing: 0.01em; }
+
+  /* ── Seals ── */
+  .seal {
+    position: absolute; width: 110px; height: 110px; border-radius: 50%;
+    border: 1px dashed rgba(176,107,89,0.4); display: grid; place-items: center;
+    font-family: var(--serif); font-style: italic; font-size: 11px; line-height: 1.4;
+    text-align: center; color: var(--ink-soft); pointer-events: none; backdrop-filter: blur(2px);
+  }
+  .seal.left  { top: 80px;  left: 6vw;  transform: rotate(-12deg); }
+  .seal.right { top: 120px; right: 6vw; transform: rotate(9deg); }
+  @media (max-width: 900px) { .seal { display: none; } }
+
+  /* ── For chips ── */
+  .for-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 28px auto 0; max-width: 720px; }
+  .for-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 999px;
+    background: rgba(255,240,230,0.5); border: 1px solid rgba(176,107,89,0.2);
+    font-family: var(--serif); font-size: 13px; color: var(--ink-soft); letter-spacing: 0.01em;
+  }
+  .for-chip .heart { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); opacity: 0.65; }
+
+  /* ── Cards ── */
+  .card-title  { font-family: var(--serif) !important; font-weight: 500 !important; font-size: 19px !important; letter-spacing: -0.01em !important; }
+  .card-atelier { font-family: var(--sans) !important; font-size: 10px !important; letter-spacing: 0.12em !important; color: var(--ink-faint) !important; }
+  .card-image { transition: box-shadow 0.6s cubic-bezier(0.23,1,0.32,1); }
+  .card:hover .card-image { box-shadow: 0 32px 60px rgba(58,26,31,0.1) !important; }
+
+  /* ── CTA button ── */
+  .concierge-btn {
+    background: var(--ink) !important; font-family: var(--sans) !important;
+    font-size: 11px !important; font-weight: 500 !important; letter-spacing: 0.22em !important;
+    display: inline-flex !important; align-items: center; gap: 12px; text-decoration: none;
+  }
+  .concierge-btn:hover { background: var(--gold) !important; }
+
+  /* ── About sheet ── */
+  .about-inner { background: rgba(252,232,218,0.82) !important; }
+
+  /* ── Footer ── */
+  .end-mark { font-family: var(--sans); font-size: 10px; letter-spacing: 0.18em; color: var(--ink-faint); text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+  <div class="liquid" aria-hidden="true">
+    <span class="silk silk-1"></span>
+    <span class="silk silk-2"></span>
+    <span class="silk silk-3"></span>
+    <span class="silk silk-4"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="top-mark">
+    <div class="brand">
+      <span class="brand-glyph">&amp;</span>
+      <span class="brand-name">წყვილი<span class="latin">Tskvili</span></span>
+    </div>
+    <div class="top-meta">
+      <span>თბილისი · Tbilisi</span>
+      <span class="dot">·</span>
+      <span>მხოლოდ პირადი შეტყობინებით</span>
+    </div>
+  </header>
+  <section class="view view-gallery" id="viewGallery">
+
+    <!-- Liquid Category Slider -->
+    <div class="slider-wrap">
+      <div class="slider" id="pillNav" role="tablist">
+        <button class="slider-link active" data-filter="All">ყველა · All</button>
+        <button class="slider-link" data-filter="Jewelry">სამკაულები</button>
+        <button class="slider-link" data-filter="Tech">ელექტრონიკა</button>
+        <button class="slider-link" data-filter="Home">სახლი</button>
+        <button class="slider-link" data-filter="About">ჩვენ შესახებ</button>
+        <span class="slider-indicator" id="pillIndicator"></span>
+      </div>
+    </div>
+
+    <div class="hero" style="position:relative;">
+      <div class="seal left">დახურული<br/>ატელიე<br/>2026</div>
+      <div class="seal right">წყვილი<br/>·<br/>Tbilisi</div>
+
+      <div class="hero-eyebrow">— —</div>
+      <h1 class="hero-title">
+        საჩუქარი, რომელიც<br/>
+        <em>ყოველთვის</em> გახსოვს.
+      </h1>
+      <p class="hero-sub">წყვილი - ნივთი რომელსაც ურთიერთობა შემდეგ ეტაპზე გადაყავს, შესაკვეთად დაგვიკავშირდით Instagram-ზე</p>
+
+      <div class="for-strip">
+        <span class="for-chip"><span class="heart"></span>გოგოსთვის · For her</span>
+        <span class="for-chip"><span class="heart"></span>მისთვის · For him</span>
+      </div>
+    </div>
+
+    <main class="bento" id="bento">
+      <!-- filled by JS -->
+    </main>
+
+    <footer class="end-mark">
+      <span>©· წყვილი · საქართველო</span>
+      <span>შეკვეთები DM-ში</span>
+    </footer>
+  </section>
+
+  <!-- =====================================================
+       VIEW 2: Product Profile ("Moment" View)
+       ===================================================== -->
+  <section class="view view-profile" id="viewProfile" aria-hidden="true">
+    <button class="back-link" id="backToGallery">
+      <span class="back-arrow">←</span>
+      <span class="back-label">გალერეაში დაბრუნება</span>
+    </button>
+
+    <article class="profile">
+      <div class="profile-image" id="profileImage"></div>
+
+      <div class="profile-body">
+        <div class="profile-tag" id="profileTag">Quiet Luxury</div>
+        <h2 class="profile-title" id="profileTitle">—</h2>
+        <p class="profile-subtitle" id="profileSubtitle">—</p>
+
+        <div class="profile-section">
+          <div class="section-label">ისტორია · The Story</div>
+          <p class="section-body" id="profileStory">—</p>
+        </div>
+
+        <div class="profile-section">
+          <div class="section-label">მასალა და წარმოშობა</div>
+          <ul class="materials" id="profileMaterials">
+            <!-- filled by JS -->
+          </ul>
+        </div>
+
+        <div class="profile-section">
+          <div class="section-label">გამოცემა</div>
+          <p class="section-body section-edition" id="profileEdition">—</p>
+        </div>
+
+        <div class="connection">
+          <a class="concierge-btn" id="profileCTA" href="#" target="_blank" rel="noopener">
+            <span class="concierge-label">აჩუქე ეს მომენტი</span>
+            <span class="concierge-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+          <div class="connection-fineprint">
+            პირადი მიმოწერა Instagram-ზე — ჩვენი გალერისტი გიპასუხებთ სახელით, ერთ საათში.<br/>
+            მიწოდება, შეფუთვა და გადახდა მხოლოდ იქ ეთანხმება — არასდროს ამ გვერდზე.
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <nav class="profile-related" id="profileRelated" aria-label="Other pieces">
+      <div class="related-label">სხვა ნივთები პორტფოლიოდან</div>
+      <div class="related-row" id="relatedRow"></div>
+    </nav>
+  </section>
+
+  <!-- ===== About Sheet (overlay for nav 'About') ===== -->
+  <div class="about-sheet" id="aboutSheet" aria-hidden="true">
+    <button class="about-close" id="aboutClose" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="about-inner">
+      <div class="hero-eyebrow">— ატელიე —</div>
+      <h2 class="about-title">ორი ადამიანი, ერთი წყნარი ნივთი.</h2>
+      <p class="about-body">წყვილი — პატარა, ნელი ატელიეა თბილისში. ყოველ სეზონს ვირჩევთ რამდენიმე ნივთს ქართველი და კავკასიელი ხელოსნებისგან, და ვუჩვენებთ მათ წყვილებს, რომლებიც ერთმანეთს ჩუქნიან — ჩქარის გარეშე, კალათის გარეშე.</p>
+      <p class="about-body">თითოეული ნივთი ატელიეში გელოდებათ. ყოველ შეტყობინებას სახელით ვპასუხობთ Instagram-ზე ერთ საათში. ყველაფერი დანარჩენი — პირადი.</p>
+      <div class="about-cities">
+        <span>თბილისი</span><span>·</span><span>ბათუმი</span><span>·</span><span>ყაზბეგი</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* Gentle override of the IG handle baked into catalog.js */
+    window.IG_USERNAME_OVERRIDE = 'tskvili';
+  </script>
+  <script src="catalog.js"></script>
+</body>
+</html>
