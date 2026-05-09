@@ -18,7 +18,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ── Render gallery ──
   function render(filter = 'All') {
-    const items = filter === 'All' ? CATALOG : CATALOG.filter(i => i.category === filter);
+    const items = filter === 'All' ? CATALOG : CATALOG.filter(i => {
+      if (filter === 'Girl') return i.category === 'female' || i.category === 'for-her';
+      if (filter === 'Boy') return i.category === 'male' || i.category === 'for-him';
+      return i.category === filter;
+    });
     bento.innerHTML = items.map(item => `
       <div class="card" data-id="${item.id}">
         <div class="card-image" style="background-image: url('${item.images[0] || ''}'); background-size: cover; background-position: center;"></div>
@@ -131,12 +135,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       id: p.id,
       name: p.product_name || p.title_translated || 'Product',
       atelier: 'ID: ' + p.id,
-      category: p.category || 'Home',
+      category: p.audience || p.category || 'unisex',
       aesthetic: 'წყვილი · Tskvili',
       subtitle: '',
       story: '',
       images: (p.images || []).map(getImageUrl),
-      materials: [['ფასი', (p.sell_price_eur || 0) + ' EUR']],
+      materials: [['ფასი', (p.sell_price_eur || 0) + ' GEL']],
       edition: '',
       label: p.category || 'Curated',
     }));

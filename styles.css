@@ -65,16 +65,32 @@ body {
 
 .slider-wrap { display: flex; justify-content: center; padding: 20px; position: sticky; top: 0; z-index: 100; }
 .slider {
-  background: rgba(255,255,255,0.7); backdrop-filter: blur(20px);
-  padding: 6px; border-radius: 100px; border: 1px solid rgba(0,0,0,0.05);
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  padding: 6px; border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow: 0 8px 32px rgba(157,125,100,0.10), inset 0 1px 0 rgba(255,255,255,0.7);
   display: flex; gap: 4px; position: relative;
 }
-.slider-link { padding: 10px 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); z-index: 2; }
-.slider-link.active { color: var(--ink); }
+.slider-link {
+  padding: 11px 22px; font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--ink-soft); z-index: 2;
+  border: none; background: transparent; cursor: pointer;
+  font-family: var(--sans); font-weight: 500;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.slider-link.active { color: var(--ink); font-weight: 600; }
 .slider-indicator {
   position: absolute; height: calc(100% - 12px); top: 6px; left: 0;
-  background: var(--page); border-radius: 100px; z-index: 1;
-  transition: all 0.6s var(--elastic); box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 100px; z-index: 1;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 16px rgba(157,125,100,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.6);
 }
 
 .bento {
@@ -183,7 +199,7 @@ body {
   font-size: 13px; padding-bottom: 10px;
   border-bottom: 1px solid rgba(0,0,0,0.05);
 }
-.materials li span:first-child { color: var(--ink-faint); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; }
+.materials li span:first-child { color: var(--ink-faint); font-size: 13px; text-transform: uppercase; letter-spacing: 0.10em; }
 .materials li span:last-child  { color: var(--ink-soft); font-weight: 400; }
 
 /* ── Connection / CTA ── */
