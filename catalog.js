@@ -35,7 +35,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     bento.innerHTML = items.map(item => `
       <div class="card" data-id="${item.id}">
-        <div class="card-image" style="background-image: url('${item.images[0] || ''}'); background-size: cover; background-position: center;"></div>
+        ${item.images[0] ? `
+          <div class="card-image" style="background-image: url('${item.images[0]}'); background-size: cover; background-position: center;"></div>
+        ` : `
+          <div class="card-image" style="background: var(--cream); display: flex; align-items: center; justify-content: center;">
+            <span style="font-family: var(--serif); font-style: italic; color: var(--gold); opacity: 0.5;">Tskvili</span>
+          </div>
+        `}
         <div class="card-body">
           <div class="card-title">${item.name}</div>
           <div class="card-atelier">${item.atelier}</div>
@@ -54,14 +60,45 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('profileTitle').textContent  = item.name;
     document.getElementById('profileSubtitle').textContent = item.subtitle;
-    document.getElementById('profileStory').textContent  = item.story;
-    document.getElementById('profileEdition').textContent= item.edition;
-    document.getElementById('profileImage').style.background =
-      `url('${item.images[0] || ''}') center/cover`;
+    const profileImg = document.getElementById('profileImage');
+    if (item.images[0]) {
+      profileImg.style.backgroundImage = `url('${item.images[0]}')`;
+      profileImg.style.backgroundSize = 'cover';
+      profileImg.style.backgroundPosition = 'center';
+      profileImg.innerHTML = '';
+    } else {
+      profileImg.style.backgroundImage = '';
+      profileImg.style.background = 'var(--cream)';
+      profileImg.innerHTML = '<div style="height:100%; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-style:italic; color:var(--gold); opacity:0.5; font-size:24px;">Tskvili</div>';
+    }
+
+    const storyEl = document.getElementById('profileStory');
+    const storySection = storyEl.closest('.profile-section');
+    if (item.story) {
+      storyEl.textContent = item.story;
+      storySection.classList.remove('hidden');
+    } else {
+      storySection.classList.add('hidden');
+    }
 
     const matList = document.getElementById('profileMaterials');
-    matList.innerHTML = item.materials.map(([k, v]) =>
-      `<li><span>${k}</span><span>${v}</span></li>`).join('');
+    const matSection = matList.closest('.profile-section');
+    if (item.materials && item.materials.length > 0) {
+      matList.innerHTML = item.materials.map(([k, v]) =>
+        `<li><span>${k}</span><span>${v}</span></li>`).join('');
+      matSection.classList.remove('hidden');
+    } else {
+      matSection.classList.add('hidden');
+    }
+
+    const editionEl = document.getElementById('profileEdition');
+    const editionSection = editionEl.closest('.profile-section');
+    if (item.edition) {
+      editionEl.textContent = item.edition;
+      editionSection.classList.remove('hidden');
+    } else {
+      editionSection.classList.add('hidden');
+    }
 
     const cta = document.getElementById('profileCTA');
     cta.href = item.instagram_url || `https://instagram.com/${ig}`;
@@ -156,13 +193,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     CATALOG = fresh.map(p => ({
       id: p.id,
       name: p.product_name || p.title_translated || 'Product',
-      atelier: 'ID: ' + p.id,
+      atelier: p.category ? p.category.charAt(0).toUpperCase() + p.category.slice(1) : '',
       category: p.audience || p.category || 'unisex',
       subtitle: p.keyword || '',
-      story: p.caption || p.description || '',
+      story: (p.caption || p.description || '').trim(),
       instagram_url: p.instagram_url || '',
       images: (p.images || []).map(getImageUrl),
-      materials: [['ფასი', (p.sell_price_eur || 0) + ' GEL']],
+      materials: p.sell_price_eur ? [['ფასი', p.sell_price_eur + ' GEL']] : [],
       edition: '',
     }));
   } catch (err) {
