@@ -129,12 +129,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fresh = data.products || [];
     CATALOG = fresh.map(p => ({
       id: p.id,
-      name: p.title_translated || p.product_name || 'Product',
-      atelier: p.keyword || 'წყვილი · Tskvili',
+      name: p.product_name || p.title_translated || 'Product',
+      atelier: 'ID: ' + p.id,
       category: p.category || 'Home',
-      aesthetic: p.keyword || 'Quiet Luxury',
-      subtitle: (p.description || '').substring(0, 100) + ((p.description && p.description.length > 100) ? '...' : ''),
-      story: p.caption || p.description || '',
+      aesthetic: 'წყვილი · Tskvili',
+      subtitle: '',
+      story: '',
       images: (p.images || []).map(getImageUrl),
       materials: [['ფასი', (p.sell_price_eur || 0) + ' EUR']],
       edition: '',
