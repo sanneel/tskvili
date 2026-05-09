@@ -24,6 +24,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (filter === 'Boy') return i.category === 'male' || i.category === 'for-him' || i.category === 'Boy';
       return i.category === filter;
     });
+    
+    if (items.length === 0) {
+      bento.innerHTML = `<div style="grid-column: 1/-1; padding: 100px 0; text-align: center; color: #666; font-family: var(--ff-b);">
+        ამჟამად კატალოგი ცარიელია. გთხოვთ, მოგვიანებით შეამოწმოთ.<br>
+        <span style="font-size: 12px; opacity: 0.7;">The catalog is currently empty. Please check back later.</span>
+      </div>`;
+      return;
+    }
+
     bento.innerHTML = items.map(item => `
       <div class="card" data-id="${item.id}">
         <div class="card-image" style="background-image: url('${item.images[0] || ''}'); background-size: cover; background-position: center;"></div>
@@ -87,16 +96,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ── Brand Logo Reset ──
   if (brandLogo) {
     brandLogo.addEventListener('click', () => {
-      // Close profile if open
       viewProfile.classList.add('hidden');
       viewProfile.setAttribute('aria-hidden', 'true');
       viewGallery.classList.remove('hidden');
-      
-      // Close about sheet if open
       aboutSheet.classList.remove('open');
       aboutSheet.setAttribute('aria-hidden', 'true');
       
-      // Reset filter to All
       const allLink = Array.from(links).find(l => l.dataset.filter === 'All');
       if (allLink) {
         links.forEach(l => l.classList.remove('active'));
@@ -105,7 +110,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         pillIndicator.style.transform = `translateX(${allLink.offsetLeft}px)`;
         render('All');
       }
-      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
@@ -131,24 +135,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   aboutClose.addEventListener('click', () => {
     aboutSheet.classList.remove('open');
     aboutSheet.setAttribute('aria-hidden', 'true');
-    // reset active pill to All
     links.forEach(l => l.classList.remove('active'));
     links[0].classList.add('active');
     pillIndicator.style.width     = `${links[0].offsetWidth}px`;
     pillIndicator.style.transform = `translateX(${links[0].offsetLeft}px)`;
   });
-  aboutSheet.addEventListener('click', e => {
-    if (e.target === aboutSheet) aboutClose.click();
-  });
 
   function getImageUrl(src) {
       if (!src) return '';
-      if (src.startsWith('/api/')) {
-          return BACKEND_URL + src;
-      }
-      if (src.startsWith('http')) {
-          return `${API_BASE}/image?url=${encodeURIComponent(src)}`;
-      }
+      if (src.startsWith('/api/')) return BACKEND_URL + src;
+      if (src.startsWith('http')) return `${API_BASE}/image?url=${encodeURIComponent(src)}`;
       return src;
   }
 
@@ -162,23 +158,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       name: p.product_name || p.title_translated || 'Product',
       atelier: 'ID: ' + p.id,
       category: p.audience || p.category || 'unisex',
-      aesthetic: '✨ ✨ ✨',
       subtitle: p.keyword || '',
       story: p.caption || p.description || '',
       instagram_url: p.instagram_url || '',
       images: (p.images || []).map(getImageUrl),
       materials: [['ფასი', (p.sell_price_eur || 0) + ' GEL']],
       edition: '',
-      label: p.category || 'Curated',
     }));
   } catch (err) {
     console.error('Failed to fetch catalog:', err);
   }
 
   render();
-  const active = document.querySelector('.slider-link.active');
-  if (active) {
-    pillIndicator.style.width     = `${active.offsetWidth}px`;
-    pillIndicator.style.transform = `translateX(${active.offsetLeft}px)`;
-  }
 });
